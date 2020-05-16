@@ -31,8 +31,8 @@ void routeToPage({
       Navigator.pushReplacement(context, route);
       break;
     case NaivigationRoute.dashboard:
-      Route _route = MaterialPageRoute(builder: (context) => Dashboard());
-      Navigator.pushReplacement(context, _route);
+      // Route _route = MaterialPageRoute(builder: (context) => Dashboard());
+      // Navigator.pushReplacement(context, _route);
       break;
   }
 }

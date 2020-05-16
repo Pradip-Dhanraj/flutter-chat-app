@@ -1,4 +1,5 @@
 import 'package:chat/services/auth-services.dart';
+import 'package:chat/services/firebase-database.dart';
 import 'package:flutter/material.dart';
 
 import 'helper/app-routes.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       initialRoute: ApllicationRoutes.routeToLogin,
       routes: {
         ApllicationRoutes.routeToDashboard: (context) => Dashboard(
+            messagecenter: MessagingManger(),
               auth: Auth(),
             ),
         ApllicationRoutes.routeToLogin: (context) => Loginpage(

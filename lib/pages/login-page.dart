@@ -1,6 +1,7 @@
 import 'package:chat/helper/app-routes.dart';
 import 'package:chat/helper/app-theme.dart';
 import 'package:chat/services/auth-services.dart';
+import 'package:chat/services/firebase-database.dart';
 import 'package:flutter/material.dart';
 
 import 'dashboard-page.dart';
@@ -174,6 +175,7 @@ class _LoginpageState extends State<Loginpage> {
                             action: NaivigationRoute.replace,
                             page: Dashboard(
                               auth: widget.auth,
+                              messagecenter: MessagingManger(),
                             ),
                           );
                         },

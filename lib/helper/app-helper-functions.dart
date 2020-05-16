@@ -1,5 +1,7 @@
 import 'package:chat/helper/app-routes.dart';
 import 'package:chat/pages/dashboard-page.dart';
+import 'package:chat/services/auth-services.dart';
+import 'package:chat/services/firebase-database.dart';
 import 'package:flutter/material.dart';
 
 Widget getDrawer({
@@ -45,7 +47,10 @@ Widget getDrawer({
             routeToPage(
               context: context,
               action: NaivigationRoute.replace,
-              page: Dashboard(),
+              page: Dashboard(
+                auth: Auth(),
+                messagecenter: MessagingManger(),
+              ),
             );
           },
         ),

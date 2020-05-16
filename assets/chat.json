@@ -1,0 +1,85 @@
+{
+    "chatdb": [
+        {
+            "uniqueid": 2,
+            "chats": [
+                {
+                    "userid": "",
+                    "time": "",
+                    "msg": "1st user"
+                },
+                {
+                    "userid": "",
+                    "time": "",
+                    "msg": "2nd user"
+                },
+                {
+                    "userid": "",
+                    "time": "",
+                    "msg": "1st user"
+                },
+                {
+                    "userid": "",
+                    "time": "",
+                    "msg": "2nd user"
+                }
+            ]
+        },
+        {
+            "uniqueid": 3,
+            "chats": [
+                {
+                    "userid": "",
+                    "time": "",
+                    "msg": "1st user"
+                },
+                {
+                    "userid": "",
+                    "time": "",
+                    "msg": "2nd user"
+                },
+                {
+                    "userid": "",
+                    "time": "",
+                    "msg": "1st user"
+                },
+                {
+                    "userid": "",
+                    "time": "",
+                    "msg": "2nd user"
+                }
+            ]
+        },
+        {
+            "uniqueid": 4,
+            "chats": [
+                {
+                    "userid": "",
+                    "time": "",
+                    "msg": "1st user"
+                },
+                {
+                    "userid": "",
+                    "time": "",
+                    "msg": "2nd user"
+                },
+                {
+                    "userid": "",
+                    "time": "",
+                    "msg": "1st user"
+                },
+                {
+                    "userid": "",
+                    "time": "",
+                    "msg": "2nd user"
+                }
+            ]
+        }
+    ],
+    "chatmapping": [
+        {
+            "uniqueid": 2,
+            "userids": []
+        }
+    ]
+}
