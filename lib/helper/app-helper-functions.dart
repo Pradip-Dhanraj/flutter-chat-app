@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 Widget getDrawer({
   @required BuildContext context,
+  @required String userid,
 }) {
   return Drawer(
     elevation: 100,
@@ -50,6 +51,7 @@ Widget getDrawer({
               page: ChatBoard(
                 auth: Auth(),
                 firebaseDatabase: BaseFirebaseDatabase(),
+                userid: userid,
               ),
             );
           },

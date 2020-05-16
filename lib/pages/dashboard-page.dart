@@ -11,8 +11,13 @@ import 'package:flutter/material.dart';
 class ChatBoard extends StatefulWidget {
   final Auth auth;
   final BaseFirebaseDatabase firebaseDatabase;
+  final userid;
 
-  ChatBoard({@required this.auth, @required this.firebaseDatabase});
+  ChatBoard({
+    @required this.auth,
+    @required this.firebaseDatabase,
+    @required this.userid,
+  });
   @override
   _ChatBoardState createState() => _ChatBoardState();
 }
@@ -22,8 +27,12 @@ class _ChatBoardState extends State<ChatBoard> {
   List<Chat> _chatList;
   StreamSubscription<Event> _onTodoAddedSubscription;
   StreamSubscription<Event> _onTodoChangedSubscription;
+  TextEditingController _inputController;
+  ScrollController _chatController;
   @override
   void initState() {
+    _inputController = TextEditingController();
+    _chatController = ScrollController();
     _chatList = List<Chat>();
     _chats =
         widget.firebaseDatabase.getDatabaseQuery(dbName: AppStrings.chatdb);
@@ -36,6 +45,8 @@ class _ChatBoardState extends State<ChatBoard> {
   void dispose() {
     _onTodoChangedSubscription?.cancel();
     _onTodoAddedSubscription?.cancel();
+    _chatController.dispose();
+    _inputController.dispose();
     super.dispose();
   }
 
@@ -53,18 +64,23 @@ class _ChatBoardState extends State<ChatBoard> {
     setState(() {
       _chatList.add(Chat.fromSnapshot(event.snapshot));
     });
+    //_chatController.po
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: getDrawer(context: context),
+      drawer: getDrawer(
+        context: context,
+        userid: widget.userid,
+      ),
       appBar: getAppBarUpdated("Dashboard", context),
-      body: Column(
-        children: <Widget>[
-          Flexible(
-            flex: 9,
-            child: ListView.builder(
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            ListView.builder(
+              controller: _chatController,
               shrinkWrap: true,
               itemCount: _chatList.length,
               itemBuilder: (_context, i) {
@@ -73,21 +89,33 @@ class _ChatBoardState extends State<ChatBoard> {
                     "userid - ${c.userId}\ntime - ${c.dateTime} \nMessage - ${c.message}\n\n");
               },
             ),
-          ),
-          Flexible(
-            flex: 1,
-            child: RaisedButton(
-              child: Text("Add"),
-              onPressed: () {
-                var chat = Chat("mobile msg", "99", DateTime.now());
-                widget.firebaseDatabase.pushData(
-                  dbName: AppStrings.chatdb,
-                  model: chat,
-                );
-              },
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextField(
+                    controller: _inputController,
+                  ),
+                ),
+                RaisedButton(
+                  child: Text("Add"),
+                  onPressed: () {
+                    if (_inputController.text == "") return;
+                    var chat = Chat(
+                      _inputController.text,
+                      widget.userid,
+                      DateTime.now(),
+                    );
+                    widget.firebaseDatabase.pushData(
+                      dbName: AppStrings.chatdb,
+                      model: chat,
+                    );
+                    _inputController.text = "";
+                  },
+                ),
+              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

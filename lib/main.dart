@@ -21,8 +21,9 @@ class MyApp extends StatelessWidget {
       initialRoute: ApllicationRoutes.routeToLogin,
       routes: {
         ApllicationRoutes.routeToDashboard: (context) => ChatBoard(
-            firebaseDatabase: BaseFirebaseDatabase(),
+              firebaseDatabase: BaseFirebaseDatabase(),
               auth: Auth(),
+              userid: null,
             ),
         ApllicationRoutes.routeToLogin: (context) => Loginpage(
               auth: Auth(),

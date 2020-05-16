@@ -19,6 +19,7 @@ class Loginpage extends StatefulWidget {
 class _LoginpageState extends State<Loginpage> {
   TextEditingController emailController;
   TextEditingController passwordController;
+  String userid;
 
   @override
   void initState() {
@@ -164,7 +165,7 @@ class _LoginpageState extends State<Loginpage> {
                       ),
                       child: FlatButton(
                         onPressed: () async {
-                          var status = await widget.auth.signIn(
+                          userid = await widget.auth.signIn(
                             emailController.text?.trim(),
                             passwordController.text?.trim(),
                           );
@@ -176,6 +177,7 @@ class _LoginpageState extends State<Loginpage> {
                             page: ChatBoard(
                               auth: widget.auth,
                               firebaseDatabase: BaseFirebaseDatabase(),
+                              userid : userid,
                             ),
                           );
                         },
