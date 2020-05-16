@@ -15,7 +15,7 @@ class _LoginpageState extends State<Loginpage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  Future<String> signInWithGoogle() async {
+  Future<bool> signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
@@ -33,8 +33,8 @@ class _LoginpageState extends State<Loginpage> {
 
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
-
-    return 'signInWithGoogle succeeded: $user';
+    print('signInWithGoogle succeeded: ${user.displayName}');
+    return await googleSignIn.isSignedIn();
   }
 
   void signOutGoogle() async {
@@ -177,13 +177,13 @@ class _LoginpageState extends State<Loginpage> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: FlatButton(
-                        onPressed: () async{
-                          await signInWithGoogle();
-                          routeToPage(
-                            context: context,
-                            action: NaivigationRoute.replace,
-                            page: Dashboard(),
-                          );
+                        onPressed: () async {
+                          if (await signInWithGoogle())
+                            routeToPage(
+                              context: context,
+                              action: NaivigationRoute.replace,
+                              page: Dashboard(),
+                            );
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
