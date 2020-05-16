@@ -1,6 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 
-class Chat {
+abstract class BaseModel {
+  toJson();
+}
+
+class Chat implements BaseModel {
   String key;
   String message;
   DateTime dateTime;
@@ -14,6 +18,7 @@ class Chat {
         message = snapshot.value["message"],
         dateTime = DateTime.parse(snapshot.value["dateTime"]);
 
+  @override
   toJson() {
     return {
       "userId": userId,

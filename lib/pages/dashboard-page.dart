@@ -25,18 +25,27 @@ class _ChatBoardState extends State<ChatBoard> {
   @override
   void initState() {
     _chatList = List<Chat>();
-    _chats = widget.firebaseDatabase.getDataReference(dbName: AppStrings.chatdb);
+    _chats =
+        widget.firebaseDatabase.getDatabaseQuery(dbName: AppStrings.chatdb);
     _onTodoAddedSubscription = _chats.onChildAdded.listen(onEntryAdded);
     _onTodoChangedSubscription = _chats.onChildChanged.listen(onEntryChanged);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _onTodoChangedSubscription?.cancel();
+    _onTodoAddedSubscription?.cancel();
+    super.dispose();
   }
 
   onEntryChanged(Event event) {
     var oldEntry =
         _chatList.singleWhere((entry) => entry.key == event.snapshot.key);
     setState(() {
-      _chatList[_chatList.indexOf(oldEntry)] =
-          Chat.fromSnapshot(event.snapshot);
+      if (oldEntry != null)
+        _chatList[_chatList.indexOf(oldEntry)] =
+            Chat.fromSnapshot(event.snapshot);
     });
   }
 
@@ -51,14 +60,34 @@ class _ChatBoardState extends State<ChatBoard> {
     return Scaffold(
       drawer: getDrawer(context: context),
       appBar: getAppBarUpdated("Dashboard", context),
-      body: ListView.builder(
-        shrinkWrap: true,
-        itemCount: _chatList.length,
-        itemBuilder: (_context, i) {
-          var c = _chatList[i];
-          return Text(
-              "userid - ${c.userId}\ntime - ${c.dateTime} \nMessage - ${c.message}\n\n");
-        },
+      body: Column(
+        children: <Widget>[
+          Flexible(
+            flex: 9,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: _chatList.length,
+              itemBuilder: (_context, i) {
+                var c = _chatList[i];
+                return Text(
+                    "userid - ${c.userId}\ntime - ${c.dateTime} \nMessage - ${c.message}\n\n");
+              },
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: RaisedButton(
+              child: Text("Add"),
+              onPressed: () {
+                var chat = Chat("mobile msg", "99", DateTime.now());
+                widget.firebaseDatabase.pushData(
+                  dbName: AppStrings.chatdb,
+                  model: chat,
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
