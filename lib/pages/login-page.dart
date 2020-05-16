@@ -4,8 +4,6 @@ import 'package:chat/services/auth-services.dart';
 import 'package:flutter/material.dart';
 
 import 'dashboard-page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class Loginpage extends StatefulWidget {
   final Auth auth;
@@ -18,6 +16,16 @@ class Loginpage extends StatefulWidget {
 }
 
 class _LoginpageState extends State<Loginpage> {
+  TextEditingController emailController;
+  TextEditingController passwordController;
+
+  @override
+  void initState() {
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,13 +81,14 @@ class _LoginpageState extends State<Loginpage> {
                     height: 60,
                     width: MediaQuery.of(context).size.width,
                     child: TextField(
+                      controller: emailController,
                       style: TextStyle(
                         color: Colors.white,
                       ),
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         fillColor: Colors.lightBlueAccent,
-                        labelText: 'Name',
+                        labelText: 'Email',
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                           borderSide: BorderSide(color: breakerbay),
@@ -101,6 +110,7 @@ class _LoginpageState extends State<Loginpage> {
                     height: 60,
                     width: MediaQuery.of(context).size.width,
                     child: TextField(
+                      controller: passwordController,
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -153,14 +163,19 @@ class _LoginpageState extends State<Loginpage> {
                       ),
                       child: FlatButton(
                         onPressed: () async {
-                          await widget.auth.signInWithGoogle();
-                          if (googleSignIn != null &&
-                              await googleSignIn.isSignedIn())
-                            routeToPage(
-                              context: context,
-                              action: NaivigationRoute.replace,
-                              page: Dashboard(),
-                            );
+                          var status = await widget.auth.signIn(
+                            emailController.text?.trim(),
+                            passwordController.text?.trim(),
+                          );
+                          // if (googleSignIn != null &&
+                          //     await googleSignIn.isSignedIn())
+                          routeToPage(
+                            context: context,
+                            action: NaivigationRoute.replace,
+                            page: Dashboard(
+                              auth: widget.auth,
+                            ),
+                          );
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

@@ -19,7 +19,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: ApllicationRoutes.routeToLogin,
       routes: {
-        ApllicationRoutes.routeToDashboard: (context) => Dashboard(),
+        ApllicationRoutes.routeToDashboard: (context) => Dashboard(
+              auth: Auth(),
+            ),
         ApllicationRoutes.routeToLogin: (context) => Loginpage(
               auth: Auth(),
             ),
