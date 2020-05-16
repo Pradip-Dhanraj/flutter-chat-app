@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: ApllicationRoutes.routeToLogin,
       routes: {
-        ApllicationRoutes.routeToDashboard: (context) => Dashboard(
-            messagecenter: MessagingManger(),
+        ApllicationRoutes.routeToDashboard: (context) => ChatBoard(
+            firebaseDatabase: BaseFirebaseDatabase(),
               auth: Auth(),
             ),
         ApllicationRoutes.routeToLogin: (context) => Loginpage(

@@ -47,9 +47,9 @@ Widget getDrawer({
             routeToPage(
               context: context,
               action: NaivigationRoute.replace,
-              page: Dashboard(
+              page: ChatBoard(
                 auth: Auth(),
-                messagecenter: MessagingManger(),
+                firebaseDatabase: BaseFirebaseDatabase(),
               ),
             );
           },
@@ -205,7 +205,10 @@ Widget getAppBarUpdated(String title, BuildContext context) {
     backgroundColor: Colors.black,
     title: Text(
       title.toUpperCase(),
-      style: TextStyle(fontSize: 17),
+      style: TextStyle(
+        fontSize: 17,
+        color: Colors.white,
+      ),
     ),
     actions: <Widget>[
       IconButton(

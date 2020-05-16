@@ -22,8 +22,8 @@ class _LoginpageState extends State<Loginpage> {
 
   @override
   void initState() {
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
+    emailController = TextEditingController(text: 'xamarinservpro@gmail.com');
+    passwordController = TextEditingController(text: 'xamarin205');
     super.initState();
   }
 
@@ -173,9 +173,9 @@ class _LoginpageState extends State<Loginpage> {
                           routeToPage(
                             context: context,
                             action: NaivigationRoute.replace,
-                            page: Dashboard(
+                            page: ChatBoard(
                               auth: widget.auth,
-                              messagecenter: MessagingManger(),
+                              firebaseDatabase: BaseFirebaseDatabase(),
                             ),
                           );
                         },
