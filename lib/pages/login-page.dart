@@ -1,5 +1,6 @@
 import 'package:chat/helper/app-routes.dart';
 import 'package:chat/helper/app-theme.dart';
+import 'package:chat/services/auth-services.dart';
 import 'package:flutter/material.dart';
 
 import 'dashboard-page.dart';
@@ -7,42 +8,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class Loginpage extends StatefulWidget {
+  final Auth auth;
+  Loginpage({
+    @required this.auth,
+  });
+
   @override
   _LoginpageState createState() => _LoginpageState();
 }
 
 class _LoginpageState extends State<Loginpage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn();
-
-  Future<bool> signInWithGoogle() async {
-    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
-
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
-
-    final AuthResult authResult = await _auth.signInWithCredential(credential);
-    final FirebaseUser user = authResult.user;
-
-    assert(!user.isAnonymous);
-    assert(await user.getIdToken() != null);
-
-    final FirebaseUser currentUser = await _auth.currentUser();
-    assert(user.uid == currentUser.uid);
-    print('signInWithGoogle succeeded: ${user.displayName}');
-    return await googleSignIn.isSignedIn();
-  }
-
-  void signOutGoogle() async {
-    await googleSignIn.signOut();
-
-    print("User Sign Out");
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,7 +153,9 @@ class _LoginpageState extends State<Loginpage> {
                       ),
                       child: FlatButton(
                         onPressed: () async {
-                          if (await signInWithGoogle())
+                          await widget.auth.signInWithGoogle();
+                          if (googleSignIn != null &&
+                              await googleSignIn.isSignedIn())
                             routeToPage(
                               context: context,
                               action: NaivigationRoute.replace,

@@ -1,3 +1,4 @@
+import 'package:chat/services/auth-services.dart';
 import 'package:flutter/material.dart';
 
 import 'helper/app-routes.dart';
@@ -19,7 +20,9 @@ class MyApp extends StatelessWidget {
       initialRoute: ApllicationRoutes.routeToLogin,
       routes: {
         ApllicationRoutes.routeToDashboard: (context) => Dashboard(),
-        ApllicationRoutes.routeToLogin: (context) => Loginpage(),
+        ApllicationRoutes.routeToLogin: (context) => Loginpage(
+              auth: Auth(),
+            ),
         // AppConstant.routeToSplashScreen: (context) => SplashScreen(
         //     'assets/splash.flr', Login(),
         //     startAnimation: 'Untitled',
