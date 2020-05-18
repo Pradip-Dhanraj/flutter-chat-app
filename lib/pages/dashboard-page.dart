@@ -25,8 +25,8 @@ class ChatBoard extends StatefulWidget {
 class _ChatBoardState extends State<ChatBoard> {
   Query _chats;
   List<Chat> _chatList;
-  StreamSubscription<Event> _onTodoAddedSubscription;
-  StreamSubscription<Event> _onTodoChangedSubscription;
+  StreamSubscription<Event> _onChatAddedSubscription;
+  StreamSubscription<Event> _onChatChangedSubscription;
   TextEditingController _inputController;
   ScrollController _chatController;
   @override
@@ -36,15 +36,15 @@ class _ChatBoardState extends State<ChatBoard> {
     _chatList = List<Chat>();
     _chats =
         widget.firebaseDatabase.getDatabaseQuery(dbName: AppStrings.chatdb);
-    _onTodoAddedSubscription = _chats.onChildAdded.listen(onEntryAdded);
-    _onTodoChangedSubscription = _chats.onChildChanged.listen(onEntryChanged);
+    _onChatAddedSubscription = _chats.onChildAdded.listen(onEntryAdded);
+    _onChatChangedSubscription = _chats.onChildChanged.listen(onEntryChanged);
     super.initState();
   }
 
   @override
   void dispose() {
-    _onTodoChangedSubscription?.cancel();
-    _onTodoAddedSubscription?.cancel();
+    _onChatChangedSubscription?.cancel();
+    _onChatAddedSubscription?.cancel();
     _chatController.dispose();
     _inputController.dispose();
     super.dispose();
@@ -74,7 +74,11 @@ class _ChatBoardState extends State<ChatBoard> {
         context: context,
         userid: widget.userid,
       ),
-      appBar: getAppBarUpdated("Dashboard", context),
+      appBar: getAppBarUpdated(
+        "Chat",
+        context,
+        widget.userid,
+      ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,

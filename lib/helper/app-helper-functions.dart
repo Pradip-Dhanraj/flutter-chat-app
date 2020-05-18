@@ -1,5 +1,9 @@
 import 'package:chat/helper/app-routes.dart';
+import 'package:chat/models/chat-model.dart';
+import 'package:chat/pages/contact-page.dart';
 import 'package:chat/pages/dashboard-page.dart';
+import 'package:chat/pages/login-page.dart';
+import 'package:chat/pages/profile-page.dart';
 import 'package:chat/services/auth-services.dart';
 import 'package:chat/services/firebase-database.dart';
 import 'package:flutter/material.dart';
@@ -56,70 +60,80 @@ Widget getDrawer({
             );
           },
         ),
-        // ListTile(
-        //   leading: Icon(
-        //     Icons.card_travel,
-        //     color: Colors.black,
-        //   ),
-        //   title: Text(
-        //     'Travel History',
-        //     style: TextStyle(fontSize: 20),
-        //   ),
-        //   onTap: () {
-        //     // Update the state of the app.
-        //     // ...
-        //     routeToPage(
-        //       context: context,
-        //       action: NaivigationRoute.replace,
-        //       page: TravelHistory(),
-        //     );
-        //   },
-        // ),
-        // ListTile(
-        //   leading: Icon(
-        //     Icons.hot_tub,
-        //     color: Colors.black,
-        //   ),
-        //   title: Text(
-        //     'Unpaid Leaves',
-        //     style: TextStyle(fontSize: 20),
-        //   ),
-        //   onTap: () {
-        //     // Update the state of the app.
-        //     // ...
-        //     routeToPage(
-        //       context: context,
-        //       action: NaivigationRoute.replace,
-        //       page: UnpaidLeaveDetails(),
-        //     );
-        //   },
-        // ),
-        // ListTile(
-        //   leading: Icon(
-        //     Icons.contact_mail,
-        //     color: Colors.black,
-        //   ),
-        //   title: Text(
-        //     'Contact',
-        //     style: TextStyle(fontSize: 20),
-        //   ),
-        //   onTap: () {
-        //     // Update the state of the app.
-        //     // ...
-        //     routeToPage(
-        //       context: context,
-        //       action: NaivigationRoute.replace,
-        //       page: ContactDeveloper(),
-        //     );
-        //   },
-        // ),
+        ListTile(
+          leading: Icon(
+            Icons.card_travel,
+            color: Colors.black,
+          ),
+          title: Text(
+            'Profile',
+            style: TextStyle(fontSize: 20),
+          ),
+          onTap: () {
+            // Update the state of the app.
+            // ...
+            routeToPage(
+              context: context,
+              action: NaivigationRoute.replace,
+              page: ProfilePage(
+                auth: Auth(),
+                firebaseDatabase: BaseFirebaseDatabase(),
+                userid: userid,
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.hot_tub,
+            color: Colors.black,
+          ),
+          title: Text(
+            'Contact Page',
+            style: TextStyle(fontSize: 20),
+          ),
+          onTap: () {
+            // Update the state of the app.
+            // ...
+            routeToPage(
+              context: context,
+              action: NaivigationRoute.replace,
+              page: ContactList(
+                auth: Auth(),
+                firebaseDatabase: BaseFirebaseDatabase(),
+                userid: userid,
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.contact_mail,
+            color: Colors.black,
+          ),
+          title: Text(
+            'Login Page',
+            style: TextStyle(fontSize: 20),
+          ),
+          onTap: () {
+            // Update the state of the app.
+            // ...
+            routeToPage(
+              context: context,
+              action: NaivigationRoute.replace,
+              page: Loginpage(
+                auth: Auth(),
+              ),
+            );
+          },
+        ),
         // ListTile(
         //   leading: Icon(
         //     Icons.exit_to_app,
         //     color: Colors.black,
         //   ),
         //   title: Text(
-        //     'Logout',
+        //     'ChatPage',
         //     style: TextStyle(fontSize: 20),
         //   ),
         //   onTap: () {
@@ -128,7 +142,11 @@ Widget getDrawer({
         //     routeToPage(
         //       context: context,
         //       action: NaivigationRoute.replace,
-        //       page: LoginPage(),
+        //       page: ChatBoard(
+        //         auth: Auth(),
+        //         firebaseDatabase: BaseFirebaseDatabase(),
+        //         userid: userid,
+        //       ),
         //     );
         //   },
         // ),
@@ -202,7 +220,7 @@ void onLoading(
   }
 }
 
-Widget getAppBarUpdated(String title, BuildContext context) {
+Widget getAppBarUpdated(String title, BuildContext context, String userid) {
   return AppBar(
     backgroundColor: Colors.black,
     title: Text(
@@ -218,7 +236,18 @@ Widget getAppBarUpdated(String title, BuildContext context) {
           Icons.account_circle,
           color: Colors.white,
         ),
-        onPressed: () => {print("profile clicked")},
+        onPressed: () {
+          print("profile clicked");
+          routeToPage(
+            context: context,
+            action: NaivigationRoute.replace,
+            page: ProfilePage(
+              auth: Auth(),
+              firebaseDatabase: BaseFirebaseDatabase(),
+              userid: userid,
+            ),
+          );
+        },
       ),
       IconButton(
         icon: Icon(

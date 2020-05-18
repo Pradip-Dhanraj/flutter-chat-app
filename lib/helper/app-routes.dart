@@ -6,7 +6,7 @@ class ApllicationRoutes {
   static const routeToTravelHistory = "/travel-history";
   static const routeToVUPPProgram = "/vupp-program";
   static const routeToTest = "/test";
-  static const routeToContactDeveloper = "/contact-developer";
+  static const routeToSignUp = "signup-page";
   static const routeToLogin = "login-page";
 }
 

@@ -8,6 +8,8 @@ abstract class BaseFirebase {
 class BaseFirebaseDatabase implements BaseFirebase {
   Query getDatabaseQuery({String dbName}) =>
       FirebaseDatabase.instance.reference().child(dbName).orderByKey();
+  // Query getDatabaseQuery({String dbName,String dbName}) =>
+  // FirebaseDatabase.instance.reference().child(dbName).orderByKey();
   void pushData({String dbName, BaseModel model}) async {
     FirebaseDatabase.instance
         .reference()

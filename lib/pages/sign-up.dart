@@ -8,25 +8,25 @@ import 'package:flutter/material.dart';
 import 'dashboard-page.dart';
 import 'profile-page.dart';
 
-class Loginpage extends StatefulWidget {
+class Signuppage extends StatefulWidget {
   final Auth auth;
-  Loginpage({
+  Signuppage({
     @required this.auth,
   });
 
   @override
-  _LoginpageState createState() => _LoginpageState();
+  _SignuppageState createState() => _SignuppageState();
 }
 
-class _LoginpageState extends State<Loginpage> {
+class _SignuppageState extends State<Signuppage> {
   TextEditingController emailController;
   TextEditingController passwordController;
   String userid;
 
   @override
   void initState() {
-    emailController = TextEditingController(text: 'xamarinservpro@gmail.com');
-    passwordController = TextEditingController(text: 'xamarin205');
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
     super.initState();
   }
 
@@ -39,7 +39,6 @@ class _LoginpageState extends State<Loginpage> {
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Row(children: <Widget>[
                   Padding(
@@ -47,7 +46,7 @@ class _LoginpageState extends State<Loginpage> {
                     child: RotatedBox(
                         quarterTurns: -1,
                         child: Text(
-                          'Sign in',
+                          'Sign up',
                           style: TextStyle(
                             color: chambray,
                             fontSize: 38,
@@ -138,33 +137,11 @@ class _LoginpageState extends State<Loginpage> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 20,
-                    top: 20,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      routeToPage(
-                          context: context,
-                          action: NaivigationRoute.push,
-                          path: ApllicationRoutes.routeToSignUp,
-                          dataobject: widget.auth);
-                    },
-                    child: Text(
-                      "Don't have an account ? \nSign up here!!",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: chambray,
-                      ),
-                    ),
-                  ),
-                ),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Padding(
                     padding: const EdgeInsets.only(
-                      top: 10,
+                      top: 20,
                       right: 20,
                     ),
                     child: Container(
@@ -190,18 +167,15 @@ class _LoginpageState extends State<Loginpage> {
                       ),
                       child: FlatButton(
                         onPressed: () async {
-                          userid = await widget.auth.signIn(
+                          userid = await widget.auth.signUp(
                             emailController.text?.trim(),
                             passwordController.text?.trim(),
                           );
-                          routeToPage(
+                          if (userid != null && userid != "")
+                            routeToPage(
                               context: context,
-                              action: NaivigationRoute.replace,
-                              page: ContactList(
-                                auth: widget.auth,
-                                firebaseDatabase: BaseFirebaseDatabase(),
-                                userid: userid,
-                              ));
+                              action: NaivigationRoute.pop,
+                            );
                           // routeToPage(
                           //   context: context,
                           //   action: NaivigationRoute.replace,
@@ -216,7 +190,7 @@ class _LoginpageState extends State<Loginpage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              'LOGIN',
+                              'Signup',
                               style: TextStyle(
                                 color: wattle,
                                 fontSize: 14,

@@ -7,6 +7,7 @@ import 'helper/app-strings.dart';
 import 'helper/app-theme.dart';
 import 'pages/dashboard-page.dart';
 import 'pages/login-page.dart';
+import 'pages/sign-up.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
               userid: null,
             ),
         ApllicationRoutes.routeToLogin: (context) => Loginpage(
+              auth: Auth(),
+            ),
+        ApllicationRoutes.routeToSignUp: (context) => Signuppage(
               auth: Auth(),
             ),
         // AppConstant.routeToSplashScreen: (context) => SplashScreen(
