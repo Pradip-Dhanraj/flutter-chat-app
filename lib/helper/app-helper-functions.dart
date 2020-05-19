@@ -1,5 +1,6 @@
 import 'package:chat/helper/app-routes.dart';
 import 'package:chat/models/chat-model.dart';
+import 'package:chat/pages/chat-list.dart';
 import 'package:chat/pages/contact-page.dart';
 import 'package:chat/pages/dashboard-page.dart';
 import 'package:chat/pages/login-page.dart';
@@ -127,29 +128,29 @@ Widget getDrawer({
             );
           },
         ),
-        // ListTile(
-        //   leading: Icon(
-        //     Icons.exit_to_app,
-        //     color: Colors.black,
-        //   ),
-        //   title: Text(
-        //     'ChatPage',
-        //     style: TextStyle(fontSize: 20),
-        //   ),
-        //   onTap: () {
-        //     // Update the state of the app.
-        //     // ...
-        //     routeToPage(
-        //       context: context,
-        //       action: NaivigationRoute.replace,
-        //       page: ChatBoard(
-        //         auth: Auth(),
-        //         firebaseDatabase: BaseFirebaseDatabase(),
-        //         userid: userid,
-        //       ),
-        //     );
-        //   },
-        // ),
+        ListTile(
+          leading: Icon(
+            Icons.exit_to_app,
+            color: Colors.black,
+          ),
+          title: Text(
+            'ChatPage',
+            style: TextStyle(fontSize: 20),
+          ),
+          onTap: () {
+            // Update the state of the app.
+            // ...
+            routeToPage(
+              context: context,
+              action: NaivigationRoute.replace,
+              page: ChatList(
+                auth: Auth(),
+                firebaseDatabase: BaseFirebaseDatabase(),
+                userid: null,
+              ),
+            );
+          },
+        ),
       ],
     ),
   );

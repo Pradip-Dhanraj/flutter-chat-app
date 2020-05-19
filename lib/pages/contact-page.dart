@@ -104,17 +104,18 @@ class _ContactListState extends State<ContactList> implements BasePage {
               child: GestureDetector(
                 onTap: () {
                   var uniquekey = generateUniqueKey(data.userId, widget.userid);
-                  var chatmapping = ChatMapping(uniquekey, [
-                    Chat(
-                      "Chat createtion",
-                      widget.userid,
-                      DateTime.now(),
-                    )
-                  ]);
-                  widget.firebaseDatabase.pushData(
-                    dbName: AppStrings.chatdb,
-                    model: chatmapping,
-                  );
+                  if (uniquekey == "") return;
+                  // var chatmapping = ChatMapping([
+                  //   Chat(
+                  //     "Chat createtion",
+                  //     widget.userid,
+                  //     DateTime.now(),
+                  //   )
+                  // ]);
+                  // widget.firebaseDatabase.pushDataWithKey(
+                  //     dbName: AppStrings.chatdb,
+                  //     model: chatmapping,
+                  //     key: uniquekey);
                 },
                 child: SizedBox(
                   child: Text(

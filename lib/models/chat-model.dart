@@ -8,19 +8,16 @@ abstract class BaseModel {
 class ChatMapping implements BaseModel {
   @override
   String key;
-  String uniquekey;
   List<Chat> conversation;
-  ChatMapping(this.uniquekey, this.conversation);
+  ChatMapping(this.conversation);
   ChatMapping.fromSnapshot(DataSnapshot snapshot)
       : key = snapshot.key,
-        uniquekey = snapshot.value["uniquekey"],
         conversation = snapshot.value["conversation"]
             .map((v) => v.fromSnapshot())
             .toList();
   @override
   toJson() {
     return {
-      "uniquekey": uniquekey,
       "conversation": this.conversation.map((v) => v.toJson()).toList(),
     };
   }
@@ -42,6 +39,13 @@ class Profile implements BaseModel {
       "userId": userId,
       "username": username,
     };
+  }
+
+  factory Profile.fromJson(Map<String, dynamic> json) {
+    return Profile(
+      json['userId'],
+      json['username'],
+    );
   }
 }
 

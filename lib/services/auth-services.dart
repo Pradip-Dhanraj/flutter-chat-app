@@ -8,6 +8,8 @@ enum BaseAuthStatus {
   EmailAndPassword,
 }
 
+String dbTokenid;
+
 BaseAuthStatus authTypeStatus;
 
 abstract class BaseAuth {
@@ -34,6 +36,8 @@ class Auth implements BaseAuth {
     AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
     FirebaseUser user = result?.user;
+    var tokenresult = await user.getIdToken();
+    dbTokenid = tokenresult.token;
     if (user != null) authTypeStatus = BaseAuthStatus.EmailAndPassword;
     return user.uid;
   }

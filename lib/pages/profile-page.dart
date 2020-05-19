@@ -58,7 +58,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 usernameController.text,
                 widget.userid,
               );
-              widget.firebaseDatabase.pushData(
+              widget.firebaseDatabase.pushDataWithKey(
+                key: widget.userid,
                 dbName: AppStrings.profiledb,
                 model: profile,
               );

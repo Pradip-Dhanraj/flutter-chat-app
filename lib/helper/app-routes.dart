@@ -8,6 +8,7 @@ class ApllicationRoutes {
   static const routeToTest = "/test";
   static const routeToSignUp = "signup-page";
   static const routeToLogin = "login-page";
+  static const routeToChatList = "chat-list";
 }
 
 enum NaivigationRoute { push, pop, replace, dashboard }

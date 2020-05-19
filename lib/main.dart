@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'helper/app-routes.dart';
 import 'helper/app-strings.dart';
 import 'helper/app-theme.dart';
+import 'pages/chat-list.dart';
 import 'pages/dashboard-page.dart';
 import 'pages/login-page.dart';
 import 'pages/sign-up.dart';
@@ -31,6 +32,11 @@ class MyApp extends StatelessWidget {
             ),
         ApllicationRoutes.routeToSignUp: (context) => Signuppage(
               auth: Auth(),
+            ),
+        ApllicationRoutes.routeToChatList: (context) => ChatList(
+              auth: Auth(),
+              firebaseDatabase: BaseFirebaseDatabase(),
+              userid: null,
             ),
         // AppConstant.routeToSplashScreen: (context) => SplashScreen(
         //     'assets/splash.flr', Login(),
