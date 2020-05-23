@@ -57,6 +57,7 @@ Widget getDrawer({
                 auth: Auth(),
                 firebaseDatabase: BaseFirebaseDatabase(),
                 userid: userid,
+                chatid: null,
               ),
             );
           },

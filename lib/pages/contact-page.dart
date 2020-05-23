@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chat/helper/app-helper-functions.dart';
+import 'package:chat/helper/app-routes.dart';
 import 'package:chat/helper/app-strings.dart';
 import 'package:chat/models/chat-model.dart';
 import 'package:chat/services/auth-services.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'base-page.dart';
+import 'dashboard-page.dart';
 
 class ContactList extends StatefulWidget {
   final Auth auth;
@@ -105,6 +107,18 @@ class _ContactListState extends State<ContactList> implements BasePage {
                 onTap: () {
                   var uniquekey = generateUniqueKey(data.userId, widget.userid);
                   if (uniquekey == "") return;
+
+                  Navigator.pushNamed(
+                    context,
+                    ApllicationRoutes.routeToDashboard,
+                    arguments: ChatBoard(
+                      auth: widget.auth,
+                      userid: widget.userid,
+                      firebaseDatabase: widget.firebaseDatabase,
+                      chatid: uniquekey,
+                    ),
+                  );
+
                   // var chatmapping = ChatMapping([
                   //   Chat(
                   //     "Chat createtion",

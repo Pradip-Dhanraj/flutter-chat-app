@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:chat/helper/app-helper-functions.dart';
-import 'package:chat/helper/app-strings.dart';
 import 'package:chat/models/chat-model.dart';
 import 'package:chat/services/auth-services.dart';
 import 'package:chat/services/firebase-database.dart';
@@ -11,12 +10,14 @@ import 'package:flutter/material.dart';
 class ChatBoard extends StatefulWidget {
   final Auth auth;
   final BaseFirebaseDatabase firebaseDatabase;
-  final userid;
+  final String userid;
+  final String chatid;
 
   ChatBoard({
     @required this.auth,
     @required this.firebaseDatabase,
     @required this.userid,
+    @required this.chatid,
   });
   @override
   _ChatBoardState createState() => _ChatBoardState();
@@ -34,8 +35,9 @@ class _ChatBoardState extends State<ChatBoard> {
     _inputController = TextEditingController();
     _chatController = ScrollController();
     _chatList = List<Chat>();
-    _chats =
-        widget.firebaseDatabase.getDatabaseQuery(dbName: AppStrings.chatdb);
+    _chats = widget.firebaseDatabase.getDatabaseQuery(
+      dbName: widget.chatid,
+    );
     _onChatAddedSubscription = _chats.onChildAdded.listen(onEntryAdded);
     _onChatChangedSubscription = _chats.onChildChanged.listen(onEntryChanged);
     super.initState();
@@ -64,7 +66,6 @@ class _ChatBoardState extends State<ChatBoard> {
     setState(() {
       _chatList.add(Chat.fromSnapshot(event.snapshot));
     });
-    //_chatController.po
   }
 
   @override
@@ -110,7 +111,7 @@ class _ChatBoardState extends State<ChatBoard> {
                       DateTime.now(),
                     );
                     widget.firebaseDatabase.pushData(
-                      dbName: AppStrings.chatdb,
+                      dbName: widget.chatid,
                       model: chat,
                     );
                     _inputController.text = "";

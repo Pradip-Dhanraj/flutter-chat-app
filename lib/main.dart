@@ -21,12 +21,30 @@ class MyApp extends StatelessWidget {
       theme: themeData,
       debugShowCheckedModeBanner: false,
       initialRoute: ApllicationRoutes.routeToLogin,
+      onGenerateRoute: (settings) {
+        if (settings.name == ApllicationRoutes.routeToDashboard) {
+          final ChatBoard args = settings.arguments;
+          return MaterialPageRoute(
+            builder: (context) {
+              return ChatBoard(
+                auth: args.auth,
+                userid: args.userid,
+                firebaseDatabase: args.firebaseDatabase,
+                chatid: args.chatid,
+              );
+            },
+          );
+        }
+        assert(false, 'Need to implement ${settings.name}');
+        return null;
+      },
       routes: {
-        ApllicationRoutes.routeToDashboard: (context) => ChatBoard(
-              firebaseDatabase: BaseFirebaseDatabase(),
-              auth: Auth(),
-              userid: null,
-            ),
+        // ApllicationRoutes.routeToDashboard: (context) => ChatBoard(
+        //       firebaseDatabase: BaseFirebaseDatabase(),
+        //       auth: Auth(),
+        //       userid: null,
+        //       chatid: null,
+        //     ),
         ApllicationRoutes.routeToLogin: (context) => Loginpage(
               auth: Auth(),
             ),
