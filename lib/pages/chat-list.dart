@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:chat/helper/app-helper-functions.dart';
+import 'package:chat/helper/app-routes.dart';
 import 'package:chat/helper/app-strings.dart';
+import 'package:chat/helper/app-theme.dart';
 import 'package:chat/models/chat-model.dart';
 import 'package:chat/services/auth-services.dart';
 import 'package:chat/services/firebase-database.dart';
@@ -9,11 +11,13 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'base-page.dart';
+import 'contact-page.dart';
+import 'profile-page.dart';
 
 class ChatList extends StatefulWidget {
   final Auth auth;
   final BaseFirebaseDatabase firebaseDatabase;
-  final userid;
+  final String userid;
   ChatList({
     @required this.auth,
     @required this.firebaseDatabase,
@@ -40,14 +44,36 @@ class _ChatListState extends State<ChatList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: getDrawer(
-        context: context,
-        userid: widget.userid,
-      ),
+      // drawer: getDrawer(
+      //   context: context,
+      //   userid: widget.userid,
+      // ),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: chambray,
+          child: Icon(
+            Icons.contacts,
+            color: wattle,
+          ),
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              ApllicationRoutes.routeToContacts,
+              arguments: ContactList(
+                auth: widget.auth,
+                firebaseDatabase: widget.firebaseDatabase,
+                userid: widget.userid,
+              ),
+            );
+          }),
       appBar: getAppBarUpdated(
         "Chat List",
         context,
         widget.userid,
+        profileArguments: ProfilePage(
+          auth: widget.auth,
+          firebaseDatabase: widget.firebaseDatabase,
+          userid: widget.userid,
+        ),
       ),
       body: FutureBuilder(
         future: widget.firebaseDatabase.getProfileData(),

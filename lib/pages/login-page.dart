@@ -5,8 +5,7 @@ import 'package:chat/services/auth-services.dart';
 import 'package:chat/services/firebase-database.dart';
 import 'package:flutter/material.dart';
 
-import 'dashboard-page.dart';
-import 'profile-page.dart';
+import 'chat-list.dart';
 
 class Loginpage extends StatefulWidget {
   final Auth auth;
@@ -194,23 +193,17 @@ class _LoginpageState extends State<Loginpage> {
                             emailController.text?.trim(),
                             passwordController.text?.trim(),
                           );
-                          routeToPage(
-                              context: context,
-                              action: NaivigationRoute.replace,
-                              page: ContactList(
-                                auth: widget.auth,
-                                firebaseDatabase: BaseFirebaseDatabase(),
-                                userid: userid,
-                              ));
-                          // routeToPage(
-                          //   context: context,
-                          //   action: NaivigationRoute.replace,
-                          //   page: ChatBoard(
-                          //     auth: widget.auth,
-                          //     firebaseDatabase: BaseFirebaseDatabase(),
-                          //     userid : userid,
-                          //   ),
-                          // );
+                          if (userid == null) return;
+
+                          Navigator.pushReplacementNamed(
+                            context,
+                            ApllicationRoutes.routeToChatList,
+                            arguments: ChatList(
+                              auth: widget.auth,
+                              firebaseDatabase: BaseFirebaseDatabase(),
+                              userid: userid,
+                            ),
+                          );
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

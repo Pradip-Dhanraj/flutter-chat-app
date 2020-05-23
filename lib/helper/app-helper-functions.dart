@@ -1,4 +1,5 @@
 import 'package:chat/helper/app-routes.dart';
+import 'package:chat/helper/app-theme.dart';
 import 'package:chat/models/chat-model.dart';
 import 'package:chat/pages/chat-list.dart';
 import 'package:chat/pages/contact-page.dart';
@@ -222,9 +223,16 @@ void onLoading(
   }
 }
 
-Widget getAppBarUpdated(String title, BuildContext context, String userid) {
+Widget getAppBarUpdated(
+  String title,
+  BuildContext context,
+  String userid, {
+  dynamic profileArguments,
+  bool showProfileIcon = true,
+  bool showExitIcon = true,
+}) {
   return AppBar(
-    backgroundColor: Colors.black,
+    backgroundColor: chambray,
     title: Text(
       title.toUpperCase(),
       style: TextStyle(
@@ -233,31 +241,37 @@ Widget getAppBarUpdated(String title, BuildContext context, String userid) {
       ),
     ),
     actions: <Widget>[
-      IconButton(
-        icon: Icon(
-          Icons.account_circle,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          print("profile clicked");
-          routeToPage(
-            context: context,
-            action: NaivigationRoute.replace,
-            page: ProfilePage(
-              auth: Auth(),
-              firebaseDatabase: BaseFirebaseDatabase(),
-              userid: userid,
-            ),
-          );
-        },
-      ),
-      IconButton(
-        icon: Icon(
-          Icons.ac_unit,
-          color: Colors.white,
-        ),
-        onPressed: () => {print("notification clicked")},
-      ), //JCI logo
+      showProfileIcon
+          ? IconButton(
+              icon: Icon(
+                Icons.account_circle,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                print("profile clicked");
+                Navigator.pushNamed(
+                  context,
+                  ApllicationRoutes.routeToProfile,
+                  arguments: profileArguments,
+                );
+              },
+            )
+          : Container(),
+      showExitIcon
+          ? IconButton(
+              icon: Icon(
+                Icons.ac_unit,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                print("logout clicked");
+                Navigator.pushReplacementNamed(
+                  context,
+                  ApllicationRoutes.routeToLogin,
+                );
+              },
+            )
+          : Container(), //JCI logo
     ],
     leading: Builder(builder: (context) {
       return IconButton(

@@ -1,12 +1,7 @@
 import 'package:chat/helper/app-routes.dart';
 import 'package:chat/helper/app-theme.dart';
-import 'package:chat/pages/contact-page.dart';
 import 'package:chat/services/auth-services.dart';
-import 'package:chat/services/firebase-database.dart';
 import 'package:flutter/material.dart';
-
-import 'dashboard-page.dart';
-import 'profile-page.dart';
 
 class Signuppage extends StatefulWidget {
   final Auth auth;
@@ -33,6 +28,15 @@ class _SignuppageState extends State<Signuppage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: chambray,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          }),
       backgroundColor: Theme.of(context).primaryColor,
       body: ListView(
         children: <Widget>[

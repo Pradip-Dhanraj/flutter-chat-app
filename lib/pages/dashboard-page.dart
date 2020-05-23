@@ -36,7 +36,7 @@ class _ChatBoardState extends State<ChatBoard> {
     _chatController = ScrollController();
     _chatList = List<Chat>();
     _chats = widget.firebaseDatabase.getDatabaseQuery(
-      dbName: widget.chatid,
+      dbName: "database/${widget.chatid}",
     );
     _onChatAddedSubscription = _chats.onChildAdded.listen(onEntryAdded);
     _onChatChangedSubscription = _chats.onChildChanged.listen(onEntryChanged);
@@ -111,7 +111,7 @@ class _ChatBoardState extends State<ChatBoard> {
                       DateTime.now(),
                     );
                     widget.firebaseDatabase.pushData(
-                      dbName: widget.chatid,
+                      dbName: "database/${widget.chatid}",
                       model: chat,
                     );
                     _inputController.text = "";

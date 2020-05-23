@@ -69,9 +69,9 @@ class BaseFirebaseDatabase implements BaseFirebase, FirebaseWebService {
     // else
     //   return response.body;
   }
-
+  String _json;
   Future<List<Profile>> getProfileData() async {
-    var _json = await getJsonData(
+    _json = await getJsonData(
       dbName: AppStrings.profiledb,
     );
     // return _json.map((v) => v.fromJson()).toList();

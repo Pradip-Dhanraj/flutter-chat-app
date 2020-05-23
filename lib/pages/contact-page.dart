@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:chat/helper/app-helper-functions.dart';
 import 'package:chat/helper/app-routes.dart';
 import 'package:chat/helper/app-strings.dart';
+import 'package:chat/helper/app-theme.dart';
 import 'package:chat/models/chat-model.dart';
 import 'package:chat/services/auth-services.dart';
 import 'package:chat/services/firebase-database.dart';
@@ -15,7 +16,7 @@ import 'dashboard-page.dart';
 class ContactList extends StatefulWidget {
   final Auth auth;
   final BaseFirebaseDatabase firebaseDatabase;
-  final userid;
+  final String userid;
   ContactList({
     @required this.auth,
     @required this.firebaseDatabase,
@@ -60,7 +61,8 @@ class _ContactListState extends State<ContactList> implements BasePage {
 
   onEntryAdded(Event event) {
     setState(() {
-      dataList.add(Profile.fromSnapshot(event.snapshot));
+      var user = Profile.fromSnapshot(event.snapshot);
+      if (user.userId != widget.userid) dataList.add(user);
     });
   }
 
@@ -88,10 +90,21 @@ class _ContactListState extends State<ContactList> implements BasePage {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: getDrawer(
-        context: context,
-        userid: widget.userid,
-      ),
+      // drawer: getDrawer(
+      //   context: context,
+      //   userid: widget.userid,
+      // ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: chambray,
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: wattle,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          }),
+
       appBar: getAppBarUpdated(
         "Contact List",
         context,
@@ -118,18 +131,6 @@ class _ContactListState extends State<ContactList> implements BasePage {
                       chatid: uniquekey,
                     ),
                   );
-
-                  // var chatmapping = ChatMapping([
-                  //   Chat(
-                  //     "Chat createtion",
-                  //     widget.userid,
-                  //     DateTime.now(),
-                  //   )
-                  // ]);
-                  // widget.firebaseDatabase.pushDataWithKey(
-                  //     dbName: AppStrings.chatdb,
-                  //     model: chatmapping,
-                  //     key: uniquekey);
                 },
                 child: SizedBox(
                   child: Text(

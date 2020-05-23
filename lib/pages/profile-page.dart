@@ -1,5 +1,6 @@
 import 'package:chat/helper/app-helper-functions.dart';
 import 'package:chat/helper/app-strings.dart';
+import 'package:chat/helper/app-theme.dart';
 import 'package:chat/models/chat-model.dart';
 import 'package:chat/services/auth-services.dart';
 import 'package:chat/services/firebase-database.dart';
@@ -35,14 +36,26 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: getDrawer(
-        context: context,
-        userid: widget.userid,
-      ),
+      // drawer: getDrawer(
+      //   context: context,
+      //   userid: widget.userid,
+      // ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: chambray,
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: wattle,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          }),
       appBar: getAppBarUpdated(
         "Profile",
         context,
         widget.userid,
+        showProfileIcon: false,
+        showExitIcon: false,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
