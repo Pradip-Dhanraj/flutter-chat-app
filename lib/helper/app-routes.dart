@@ -1,10 +1,7 @@
-import 'package:chat/pages/dashboard-page.dart';
 import 'package:flutter/material.dart';
 
 class ApllicationRoutes {
-  static const routeToDashboard = "/dashboard";
-  static const routeToTravelHistory = "/travel-history";
-  static const routeToVUPPProgram = "/vupp-program";
+  static const routeToDashboard = "/chat-board";
   static const routeToTest = "/test";
   static const routeToSignUp = "signup-page";
   static const routeToLogin = "login-page";

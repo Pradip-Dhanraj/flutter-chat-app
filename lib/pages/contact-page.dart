@@ -117,11 +117,10 @@ class _ContactListState extends State<ContactList> implements BasePage {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: GestureDetector(
-                onTap: () {
+                onTap: () async {
                   var uniquekey = generateUniqueKey(data.userId, widget.userid);
                   if (uniquekey == "") return;
-
-                  Navigator.pushNamed(
+                  await Navigator.pushNamed(
                     context,
                     ApllicationRoutes.routeToDashboard,
                     arguments: ChatBoard(
@@ -129,6 +128,7 @@ class _ContactListState extends State<ContactList> implements BasePage {
                       userid: widget.userid,
                       firebaseDatabase: widget.firebaseDatabase,
                       chatid: uniquekey,
+                      displayName: data.username,
                     ),
                   );
                 },

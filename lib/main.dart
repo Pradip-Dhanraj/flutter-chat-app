@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
               userid: args.userid,
               firebaseDatabase: args.firebaseDatabase,
               chatid: args.chatid,
+              displayName: args.displayName,
             ),
           );
         } else if (settings.name == ApllicationRoutes.routeToChatList) {

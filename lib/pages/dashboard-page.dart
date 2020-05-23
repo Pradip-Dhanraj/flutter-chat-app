@@ -1,23 +1,29 @@
 import 'dart:async';
 
 import 'package:chat/helper/app-helper-functions.dart';
+import 'package:chat/helper/app-strings.dart';
 import 'package:chat/models/chat-model.dart';
+import 'package:chat/models/local-database.dart' as local;
 import 'package:chat/services/auth-services.dart';
 import 'package:chat/services/firebase-database.dart';
+import 'package:chat/services/local-database-services.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 class ChatBoard extends StatefulWidget {
   final Auth auth;
   final BaseFirebaseDatabase firebaseDatabase;
   final String userid;
   final String chatid;
+  final String displayName;
 
   ChatBoard({
     @required this.auth,
     @required this.firebaseDatabase,
     @required this.userid,
     @required this.chatid,
+    @required this.displayName,
   });
   @override
   _ChatBoardState createState() => _ChatBoardState();
@@ -30,8 +36,10 @@ class _ChatBoardState extends State<ChatBoard> {
   StreamSubscription<Event> _onChatChangedSubscription;
   TextEditingController _inputController;
   ScrollController _chatController;
+  LocalDB db;
   @override
   void initState() {
+    db = getLocalDB();
     _inputController = TextEditingController();
     _chatController = ScrollController();
     _chatList = List<Chat>();
@@ -84,15 +92,17 @@ class _ChatBoardState extends State<ChatBoard> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            ListView.builder(
-              controller: _chatController,
-              shrinkWrap: true,
-              itemCount: _chatList.length,
-              itemBuilder: (_context, i) {
-                var c = _chatList[i];
-                return Text(
-                    "userid - ${c.userId}\ntime - ${c.dateTime} \nMessage - ${c.message}\n\n");
-              },
+            SizedBox(
+              child: ListView.builder(
+                controller: _chatController,
+                shrinkWrap: true,
+                itemCount: _chatList.length,
+                itemBuilder: (_context, i) {
+                  var c = _chatList[i];
+                  return Text(
+                      "userid - ${c.userId}\ntime - ${c.dateTime} \nMessage - ${c.message}\n\n");
+                },
+              ),
             ),
             Row(
               children: <Widget>[
@@ -103,7 +113,7 @@ class _ChatBoardState extends State<ChatBoard> {
                 ),
                 RaisedButton(
                   child: Text("Add"),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_inputController.text == "") return;
                     var chat = Chat(
                       _inputController.text,
@@ -115,6 +125,14 @@ class _ChatBoardState extends State<ChatBoard> {
                       model: chat,
                     );
                     _inputController.text = "";
+                    await db.putInLocalDb(
+                      dbTable: AppStrings.localChatDatabaseTable,
+                      localmodel: local.Chat(
+                        time: "${DateTime.now()}",
+                        displayname: widget.displayName,
+                        uniqueid: widget.chatid,
+                      ),
+                    );
                   },
                 ),
               ],
