@@ -1,6 +1,5 @@
 import 'package:chat/helper/app-routes.dart';
 import 'package:chat/helper/app-theme.dart';
-import 'package:chat/models/chat-model.dart';
 import 'package:chat/pages/chat-list.dart';
 import 'package:chat/pages/contact-page.dart';
 import 'package:chat/pages/dashboard-page.dart';
@@ -10,153 +9,154 @@ import 'package:chat/services/auth-services.dart';
 import 'package:chat/services/firebase-database.dart';
 import 'package:flutter/material.dart';
 
-Widget getDrawer({
-  @required BuildContext context,
-  @required String userid,
-}) {
-  return Drawer(
-    elevation: 100,
-    child: ListView(
-      padding: EdgeInsets.zero,
-      children: <Widget>[
-        DrawerHeader(
-          child: Column(
-            children: <Widget>[
-              Text(
-                'JCI',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              Expanded(
-                child: Icon(
-                  Icons.dashboard,
-                  color: Colors.white,
-                  size: 100,
-                ),
-              )
-            ],
-          ),
-          decoration: BoxDecoration(
-            color: Colors.black,
-          ),
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.dashboard,
-            color: Colors.black,
-          ),
-          title: Text(
-            'Dashboard',
-            style: TextStyle(fontSize: 20),
-          ),
-          onTap: () {
-            routeToPage(
-              context: context,
-              action: NaivigationRoute.replace,
-              page: ChatBoard(
-                auth: Auth(),
-                firebaseDatabase: BaseFirebaseDatabase(),
-                userid: userid,
-                chatid: null,
-              ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.card_travel,
-            color: Colors.black,
-          ),
-          title: Text(
-            'Profile',
-            style: TextStyle(fontSize: 20),
-          ),
-          onTap: () {
-            // Update the state of the app.
-            // ...
-            routeToPage(
-              context: context,
-              action: NaivigationRoute.replace,
-              page: ProfilePage(
-                auth: Auth(),
-                firebaseDatabase: BaseFirebaseDatabase(),
-                userid: userid,
-              ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.hot_tub,
-            color: Colors.black,
-          ),
-          title: Text(
-            'Contact Page',
-            style: TextStyle(fontSize: 20),
-          ),
-          onTap: () {
-            // Update the state of the app.
-            // ...
-            routeToPage(
-              context: context,
-              action: NaivigationRoute.replace,
-              page: ContactList(
-                auth: Auth(),
-                firebaseDatabase: BaseFirebaseDatabase(),
-                userid: userid,
-              ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.contact_mail,
-            color: Colors.black,
-          ),
-          title: Text(
-            'Login Page',
-            style: TextStyle(fontSize: 20),
-          ),
-          onTap: () {
-            // Update the state of the app.
-            // ...
-            routeToPage(
-              context: context,
-              action: NaivigationRoute.replace,
-              page: Loginpage(
-                auth: Auth(),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.exit_to_app,
-            color: Colors.black,
-          ),
-          title: Text(
-            'ChatPage',
-            style: TextStyle(fontSize: 20),
-          ),
-          onTap: () {
-            // Update the state of the app.
-            // ...
-            routeToPage(
-              context: context,
-              action: NaivigationRoute.replace,
-              page: ChatList(
-                auth: Auth(),
-                firebaseDatabase: BaseFirebaseDatabase(),
-                userid: null,
-              ),
-            );
-          },
-        ),
-      ],
-    ),
-  );
-}
+// Widget getDrawer({
+//   @required BuildContext context,
+//   @required String userid,
+// }) {
+//   return Drawer(
+//     elevation: 100,
+//     child: ListView(
+//       padding: EdgeInsets.zero,
+//       children: <Widget>[
+//         DrawerHeader(
+//           child: Column(
+//             children: <Widget>[
+//               Text(
+//                 'JCI',
+//                 style: TextStyle(
+//                   color: Colors.white,
+//                 ),
+//               ),
+//               Expanded(
+//                 child: Icon(
+//                   Icons.dashboard,
+//                   color: Colors.white,
+//                   size: 100,
+//                 ),
+//               )
+//             ],
+//           ),
+//           decoration: BoxDecoration(
+//             color: Colors.black,
+//           ),
+//         ),
+//         ListTile(
+//           leading: Icon(
+//             Icons.dashboard,
+//             color: Colors.black,
+//           ),
+//           title: Text(
+//             'Dashboard',
+//             style: TextStyle(fontSize: 20),
+//           ),
+//           onTap: () {
+//             routeToPage(
+//               context: context,
+//               action: NaivigationRoute.replace,
+//               page: ChatBoard(
+//                 auth: Auth(),
+//                 firebaseDatabase: BaseFirebaseDatabase(),
+//                 userid: userid,
+//                 chatid: null,
+//                 displayName: null,
+//               ),
+//             );
+//           },
+//         ),
+//         ListTile(
+//           leading: Icon(
+//             Icons.card_travel,
+//             color: Colors.black,
+//           ),
+//           title: Text(
+//             'Profile',
+//             style: TextStyle(fontSize: 20),
+//           ),
+//           onTap: () {
+//             // Update the state of the app.
+//             // ...
+//             routeToPage(
+//               context: context,
+//               action: NaivigationRoute.replace,
+//               page: ProfilePage(
+//                 auth: Auth(),
+//                 firebaseDatabase: BaseFirebaseDatabase(),
+//                 userid: userid,
+//               ),
+//             );
+//           },
+//         ),
+//         ListTile(
+//           leading: Icon(
+//             Icons.hot_tub,
+//             color: Colors.black,
+//           ),
+//           title: Text(
+//             'Contact Page',
+//             style: TextStyle(fontSize: 20),
+//           ),
+//           onTap: () {
+//             // Update the state of the app.
+//             // ...
+//             routeToPage(
+//               context: context,
+//               action: NaivigationRoute.replace,
+//               page: ContactList(
+//                 auth: Auth(),
+//                 firebaseDatabase: BaseFirebaseDatabase(),
+//                 userid: userid,
+//               ),
+//             );
+//           },
+//         ),
+//         ListTile(
+//           leading: Icon(
+//             Icons.contact_mail,
+//             color: Colors.black,
+//           ),
+//           title: Text(
+//             'Login Page',
+//             style: TextStyle(fontSize: 20),
+//           ),
+//           onTap: () {
+//             // Update the state of the app.
+//             // ...
+//             routeToPage(
+//               context: context,
+//               action: NaivigationRoute.replace,
+//               page: Loginpage(
+//                 auth: Auth(),
+//               ),
+//             );
+//           },
+//         ),
+//         ListTile(
+//           leading: Icon(
+//             Icons.exit_to_app,
+//             color: Colors.black,
+//           ),
+//           title: Text(
+//             'ChatPage',
+//             style: TextStyle(fontSize: 20),
+//           ),
+//           onTap: () {
+//             // Update the state of the app.
+//             // ...
+//             routeToPage(
+//               context: context,
+//               action: NaivigationRoute.replace,
+//               page: ChatList(
+//                 auth: Auth(),
+//                 firebaseDatabase: BaseFirebaseDatabase(),
+//                 userid: null,
+//               ),
+//             );
+//           },
+//         ),
+//       ],
+//     ),
+//   );
+// }
 
 void popupDialog({
   @required BuildContext context,
